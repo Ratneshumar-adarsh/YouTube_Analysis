@@ -1,0 +1,1475 @@
+{
+  "datasets" : [ {
+    "name" : "8e18736a",
+    "displayName" : "channel",
+    "query" : "SELECT * FROM workspace.youtube.channel"
+  }, {
+    "name" : "67e37a7a",
+    "displayName" : "videos",
+    "query" : "SELECT * FROM workspace.youtube.videos_silver"
+  }, {
+    "name" : "b0073e26",
+    "displayName" : "creationChannel",
+    "query" : "select title,date(createdAt) as createdAt from youtube.channel"
+  }, {
+    "name" : "8c6dde2c",
+    "displayName" : "VideoUploadRatio",
+    "query" : "select channel_id,title,date(createdAt) as createdAt,videos_count/datediff(day, createdAt,current_date()) as videos_per_day,\r\nvideos_count/datediff(week, createdAt,current_date()) as videos_per_week from youtube.channel "
+  }, {
+    "name" : "541cf848",
+    "displayName" : "YouTube Video Uploads Sorted by Date",
+    "query" : "select * from youtube.videos_silver order by publishedAt desc "
+  }, {
+    "name" : "b10ec8e7",
+    "displayName" : "Top Viewed YouTube Content",
+    "query" : "\r\nselect * from youtube.videos_silver  where channel_title = :Channel_Name order by viewCount desc limit 20",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "8f156083",
+    "displayName" : "Top Liked YouTube Content",
+    "query" : "select * from youtube.videos_silver where channel_title = :Channel_Name order by likeCount desc limit 20",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "e19c2baf",
+    "displayName" : "Most Discussed YouTube Content",
+    "query" : "select * from youtube.videos_silver  where channel_title = :Channel_Name order by commentCount desc limit 20",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "43aaeb89",
+    "displayName" : "Top longest videos",
+    "query" : "select * from youtube.videos_silver where channel_title = :Channel_Name  order by duration desc limit 30\r\n",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "701f0a9b",
+    "displayName" : "YouTube Channel View Count Analysis",
+    "query" : "select v.channel_id,v.video_id,v.title,v.viewCount,c.subscribers_count,v.viewCount/c.subscribers_count as view_per_subscriber\r\nfrom youtube.videos_silver v inner join youtube.channel c on v.channel_id=c.channel_id where c.title = :Channel_Name\r\norder by view_per_subscriber desc limit 20\r\n\r\n",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "ccc4054a",
+    "displayName" : "Recent YouTube Uploads by Date",
+    "query" : "select * from youtube.videos_silver where channel_title = :Channel_Name order by publishedAt desc limit 50\r\n\r\n\r\n",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "0dece388",
+    "displayName" : "YouTube Upload Frequency Analysis",
+    "query" : "select date(publishedAt) as published_date,count(video_id) as video_count from youtube.videos_silver where channel_title = :Channel_Name group by date(publishedAt)\r\norder by published_date desc limit 30\r\n\r\n",
+    "parameters" : [ {
+      "displayName" : "Channel_Name",
+      "keyword" : "Channel_Name",
+      "dataType" : "STRING",
+      "defaultSelection" : {
+        "values" : {
+          "dataType" : "STRING",
+          "values" : [ {
+            "value" : "The Lallantop"
+          } ]
+        }
+      }
+    } ]
+  }, {
+    "name" : "54cd29c3",
+    "displayName" : "YouTube Videos Silver Dataset Analysis",
+    "query" : "select * from youtube.videos_silver"
+  }, {
+    "name" : "69b3c09f",
+    "displayName" : "YouTube Channels and Their Video Statistics",
+    "query" : "\r\nselect * from youtube.channel\r\n-- where title = :Channel_Name"
+  } ],
+  "pages" : [ {
+    "name" : "cd26935d",
+    "displayName" : "Video_Details",
+    "layout" : [ {
+      "widget" : {
+        "name" : "3b5dd194",
+        "textbox_spec" : "# Youtube Videos Analysis"
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 0,
+        "width" : 6,
+        "height" : 2
+      }
+    }, {
+      "widget" : {
+        "name" : "8459e56b",
+        "queries" : [ {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051aacec71ab38225bca919dfde73_channel_title",
+          "query" : {
+            "datasetName" : "54cd29c3",
+            "fields" : [ {
+              "name" : "channel_title",
+              "expression" : "`channel_title`"
+            }, {
+              "name" : "channel_title_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f052771b651661adc03f5edee6bbd7_title",
+          "query" : {
+            "datasetName" : "69b3c09f",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "title_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e81bde15599d954e2308ae6b11_Channel_Name",
+          "query" : {
+            "datasetName" : "8f156083",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e80cb41b5d9faedd1123e45e43_Channel_Name",
+          "query" : {
+            "datasetName" : "b10ec8e7",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e828bd113da3e4b5fc6b35df86_Channel_Name",
+          "query" : {
+            "datasetName" : "e19c2baf",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fa948c11b59c1b53f34acdf935_Channel_Name",
+          "query" : {
+            "datasetName" : "43aaeb89",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fda39e17918a8dcd0258fc80f5_Channel_Name",
+          "query" : {
+            "datasetName" : "701f0a9b",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051a55d6b1d8e9ec551df0e9a18be_Channel_Name",
+          "query" : {
+            "datasetName" : "ccc4054a",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051a62526168b9352136eba68b7cb_Channel_Name",
+          "query" : {
+            "datasetName" : "0dece388",
+            "parameters" : [ {
+              "name" : "Channel_Name",
+              "keyword" : "Channel_Name"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 2,
+          "widgetType" : "filter-single-select",
+          "encodings" : {
+            "fields" : [ {
+              "fieldName" : "channel_title",
+              "displayName" : "channel_title",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051aacec71ab38225bca919dfde73_channel_title"
+            }, {
+              "fieldName" : "title",
+              "displayName" : "title",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f052771b651661adc03f5edee6bbd7_title"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e81bde15599d954e2308ae6b11_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e80cb41b5d9faedd1123e45e43_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e828bd113da3e4b5fc6b35df86_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fa948c11b59c1b53f34acdf935_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fda39e17918a8dcd0258fc80f5_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051a55d6b1d8e9ec551df0e9a18be_Channel_Name"
+            }, {
+              "parameterName" : "Channel_Name",
+              "queryName" : "parameter_dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051a62526168b9352136eba68b7cb_Channel_Name"
+            } ]
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Channel_Name"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 2,
+        "width" : 3,
+        "height" : 1
+      }
+    }, {
+      "widget" : {
+        "name" : "f73399ac",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "b10ec8e7",
+            "fields" : [ {
+              "name" : "viewCount",
+              "expression" : "`viewCount`"
+            }, {
+              "name" : "title",
+              "expression" : "`title`"
+            } ],
+            "parameterValues" : [ {
+              "keyword" : "Channel_Name",
+              "selection" : { }
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical",
+                "sort" : {
+                  "by" : "y"
+                }
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "viewCount",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "exact",
+                  "places" : 2
+                }
+              },
+              "displayName" : "viewCount"
+            },
+            "color" : {
+              "fieldName" : "viewCount",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "displayName" : "viewCount"
+            },
+            "label" : {
+              "show" : true
+            },
+            "extra" : [ {
+              "fieldName" : "viewCount",
+              "displayName" : "viewCount"
+            } ]
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Top 20 Viewed Videos"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 21,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "5277b19e",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8f156083",
+            "fields" : [ {
+              "name" : "likeCount",
+              "expression" : "`likeCount`"
+            }, {
+              "name" : "title",
+              "expression" : "`title`"
+            } ],
+            "parameterValues" : [ {
+              "keyword" : "Channel_Name",
+              "selection" : { }
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical",
+                "sort" : {
+                  "by" : "y"
+                }
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "likeCount",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "exact",
+                  "places" : 2
+                },
+                "hideGroupSeparator" : false
+              },
+              "displayName" : "likeCount"
+            },
+            "color" : {
+              "fieldName" : "likeCount",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "displayName" : "likeCount"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Top liked YouTube content"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 9,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "b6352a58",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "e19c2baf",
+            "fields" : [ {
+              "name" : "commentCount",
+              "expression" : "`commentCount`"
+            }, {
+              "name" : "title",
+              "expression" : "`title`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical",
+                "sort" : {
+                  "by" : "y-reversed"
+                }
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "commentCount",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "exact",
+                  "places" : 2
+                }
+              },
+              "displayName" : "commentCount"
+            },
+            "color" : {
+              "fieldName" : "commentCount",
+              "scale" : {
+                "type" : "quantitative",
+                "colorRamp" : {
+                  "mode" : "scheme",
+                  "scheme" : "greens"
+                }
+              },
+              "displayName" : "commentCount"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Top videos with largest comment"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 27,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "aed43e29",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "43aaeb89",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "duration",
+              "expression" : "`duration`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical",
+                "sort" : {
+                  "by" : "y"
+                }
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "duration",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "max",
+                  "places" : 2
+                }
+              },
+              "displayName" : "duration"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "longest video"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 33,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "212af75f",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "701f0a9b",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "viewCount",
+              "expression" : "`viewCount`"
+            }, {
+              "name" : "subscribers_count",
+              "expression" : "`subscribers_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 1,
+          "widgetType" : "combo",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "primary" : {
+                "fields" : [ {
+                  "fieldName" : "viewCount",
+                  "displayName" : "viewCount"
+                }, {
+                  "fieldName" : "subscribers_count",
+                  "displayName" : "subscribers_count"
+                } ]
+              },
+              "secondary" : {
+                "fields" : [ ]
+              },
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "max",
+                  "places" : 2
+                }
+              }
+            },
+            "label" : {
+              "show" : false
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "View_Per_subscriber for top video"
+          },
+          "mark" : {
+            "layout" : "percent-stack"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 39,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "da78f9ac",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "ccc4054a",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "viewCount",
+              "expression" : "`viewCount`"
+            }, {
+              "name" : "likeCount",
+              "expression" : "`likeCount`"
+            }, {
+              "name" : "commentCount",
+              "expression" : "`commentCount`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 1,
+          "widgetType" : "combo",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "primary" : {
+                "fields" : [ {
+                  "fieldName" : "viewCount",
+                  "displayName" : "viewCount"
+                }, {
+                  "fieldName" : "likeCount",
+                  "displayName" : "likeCount"
+                }, {
+                  "fieldName" : "commentCount",
+                  "displayName" : "commentCount"
+                } ]
+              },
+              "secondary" : {
+                "fields" : [ ]
+              },
+              "scale" : {
+                "type" : "quantitative"
+              }
+            },
+            "label" : {
+              "show" : false
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "The latest Videos"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 45,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "9b0eac78",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "0dece388",
+            "fields" : [ {
+              "name" : "daily(published_date)",
+              "expression" : "DATE_TRUNC(\"DAY\", `published_date`)"
+            }, {
+              "name" : "video_count",
+              "expression" : "`video_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "daily(published_date)",
+              "scale" : {
+                "type" : "temporal"
+              },
+              "displayName" : "published_date"
+            },
+            "y" : {
+              "fieldName" : "video_count",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "displayName" : "video_count"
+            },
+            "label" : {
+              "show" : true
+            }
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 51,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "77aa53f9",
+        "queries" : [ {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051aacec71ab38225bca919dfde73_publishedAt",
+          "query" : {
+            "datasetName" : "54cd29c3",
+            "fields" : [ {
+              "name" : "publishedAt",
+              "expression" : "`publishedAt`"
+            }, {
+              "name" : "publishedAt_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e80cb41b5d9faedd1123e45e43_publishedAt",
+          "query" : {
+            "datasetName" : "b10ec8e7",
+            "fields" : [ {
+              "name" : "publishedAt",
+              "expression" : "`publishedAt`"
+            }, {
+              "name" : "publishedAt_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e81bde15599d954e2308ae6b11_publishedAt",
+          "query" : {
+            "datasetName" : "8f156083",
+            "fields" : [ {
+              "name" : "publishedAt",
+              "expression" : "`publishedAt`"
+            }, {
+              "name" : "publishedAt_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e828bd113da3e4b5fc6b35df86_publishedAt",
+          "query" : {
+            "datasetName" : "e19c2baf",
+            "fields" : [ {
+              "name" : "publishedAt",
+              "expression" : "`publishedAt`"
+            }, {
+              "name" : "publishedAt_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        }, {
+          "name" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fa948c11b59c1b53f34acdf935_publishedAt",
+          "query" : {
+            "datasetName" : "43aaeb89",
+            "fields" : [ {
+              "name" : "publishedAt",
+              "expression" : "`publishedAt`"
+            }, {
+              "name" : "publishedAt_associativity",
+              "expression" : "COUNT_IF(`associative_filter_predicate_group`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 2,
+          "widgetType" : "filter-date-range-picker",
+          "encodings" : {
+            "fields" : [ {
+              "fieldName" : "publishedAt",
+              "displayName" : "publishedAt",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f051aacec71ab38225bca919dfde73_publishedAt"
+            }, {
+              "fieldName" : "publishedAt",
+              "displayName" : "publishedAt",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e80cb41b5d9faedd1123e45e43_publishedAt"
+            }, {
+              "fieldName" : "publishedAt",
+              "displayName" : "publishedAt",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e81bde15599d954e2308ae6b11_publishedAt"
+            }, {
+              "fieldName" : "publishedAt",
+              "displayName" : "publishedAt",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050e828bd113da3e4b5fc6b35df86_publishedAt"
+            }, {
+              "fieldName" : "publishedAt",
+              "displayName" : "publishedAt",
+              "queryName" : "dashboards/01f050d9ca351f4aa831a15eb666b7ab/datasets/01f050fa948c11b59c1b53f34acdf935_publishedAt"
+            } ]
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Date Range"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 2,
+        "width" : 3,
+        "height" : 1
+      }
+    }, {
+      "widget" : {
+        "name" : "4991892b",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "54cd29c3",
+            "fields" : [ {
+              "name" : "monthly(publishedAt)",
+              "expression" : "DATE_TRUNC(\"MONTH\", `publishedAt`)"
+            }, {
+              "name" : "count(video_id)",
+              "expression" : "COUNT(`video_id`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "line",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "monthly(publishedAt)",
+              "scale" : {
+                "type" : "temporal"
+              },
+              "format" : {
+                "type" : "date-time",
+                "date" : "locale-short-month",
+                "time" : "locale-hour-minute"
+              },
+              "axis" : {
+                "hideLabels" : false,
+                "hideTitle" : false,
+                "title" : "Publised Month"
+              },
+              "displayName" : "Publised Month"
+            },
+            "y" : {
+              "fieldName" : "count(video_id)",
+              "scale" : {
+                "type" : "quantitative",
+                "reverse" : false
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "max",
+                  "places" : 2
+                }
+              },
+              "axis" : {
+                "title" : "No of videos",
+                "hideLabels" : false
+              },
+              "displayName" : "No of videos"
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Dashboard"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 3,
+        "width" : 4,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "c5eac5d3",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "69b3c09f",
+            "fields" : [ {
+              "name" : "subscribers_count",
+              "expression" : "`subscribers_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 2,
+          "widgetType" : "counter",
+          "encodings" : {
+            "value" : {
+              "fieldName" : "subscribers_count",
+              "displayName" : "subscribers_count"
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "No of Subscriber "
+          }
+        }
+      },
+      "position" : {
+        "x" : 4,
+        "y" : 3,
+        "width" : 2,
+        "height" : 3
+      }
+    }, {
+      "widget" : {
+        "name" : "26c00e45",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "69b3c09f",
+            "fields" : [ {
+              "name" : "videos_count",
+              "expression" : "`videos_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 2,
+          "widgetType" : "counter",
+          "encodings" : {
+            "value" : {
+              "fieldName" : "videos_count",
+              "displayName" : "videos_count"
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "No of video "
+          }
+        }
+      },
+      "position" : {
+        "x" : 4,
+        "y" : 6,
+        "width" : 2,
+        "height" : 3
+      }
+    } ],
+    "pageType" : "PAGE_TYPE_CANVAS"
+  }, {
+    "name" : "8bd58b97",
+    "displayName" : "Channel_Details",
+    "layout" : [ {
+      "widget" : {
+        "name" : "daeb1fbd",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8e18736a",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "subscribers_count",
+              "expression" : "`subscribers_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "subscribers_count",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "max",
+                  "places" : 2
+                }
+              },
+              "displayName" : "subscribers_count"
+            },
+            "color" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "showDescription" : false,
+            "title" : "subscriber count"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 6,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "f89e18ef",
+        "textbox_spec" : "# **YouTube Channel Analysis**"
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 0,
+        "width" : 6,
+        "height" : 2
+      }
+    }, {
+      "widget" : {
+        "name" : "8cb52746",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8e18736a",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "videos_count",
+              "expression" : "`videos_count`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "y" : {
+              "fieldName" : "videos_count",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "format" : {
+                "type" : "number-plain",
+                "abbreviation" : "compact",
+                "decimalPlaces" : {
+                  "type" : "max",
+                  "places" : 2
+                }
+              },
+              "displayName" : "videos_count"
+            },
+            "color" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical",
+                "mappings" : [ {
+                  "value" : "The Lallantop",
+                  "color" : {
+                    "themeColorType" : "visualizationColors",
+                    "position" : 1
+                  }
+                }, {
+                  "value" : "Sarthak Goswami",
+                  "color" : {
+                    "themeColorType" : "visualizationColors",
+                    "position" : 2
+                  }
+                } ]
+              },
+              "displayName" : "title"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "YouTube Video Count"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 6,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "5b14e04c",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "b0073e26",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "createdAt",
+              "expression" : "`createdAt`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "bar",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "createdAt",
+              "scale" : {
+                "type" : "temporal"
+              },
+              "displayName" : "createdAt"
+            },
+            "y" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "color" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "label" : {
+              "show" : true
+            }
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Channel Creation date"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 12,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "7cf71631",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8e18736a",
+            "fields" : [ {
+              "name" : "channel_id",
+              "expression" : "`channel_id`"
+            }, {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "description",
+              "expression" : "`description`"
+            }, {
+              "name" : "createdAt",
+              "expression" : "`createdAt`"
+            }, {
+              "name" : "subscribers_count",
+              "expression" : "`subscribers_count`"
+            }, {
+              "name" : "views_count",
+              "expression" : "`views_count`"
+            }, {
+              "name" : "videos_count",
+              "expression" : "`videos_count`"
+            }, {
+              "name" : "privacyStatus",
+              "expression" : "`privacyStatus`"
+            } ],
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 1,
+          "widgetType" : "table",
+          "encodings" : {
+            "columns" : [ {
+              "fieldName" : "channel_id",
+              "title" : "channel_id",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "string",
+              "displayAs" : "string",
+              "displayName" : "channel_id"
+            }, {
+              "fieldName" : "title",
+              "title" : "title",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "string",
+              "displayAs" : "string",
+              "displayName" : "title"
+            }, {
+              "fieldName" : "description",
+              "title" : "description",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "string",
+              "displayAs" : "string",
+              "displayName" : "description"
+            }, {
+              "fieldName" : "createdAt",
+              "title" : "createdAt",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "string",
+              "displayAs" : "string",
+              "displayName" : "createdAt"
+            }, {
+              "fieldName" : "subscribers_count",
+              "title" : "subscribers_count",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "integer",
+              "displayAs" : "number",
+              "displayName" : "subscribers_count"
+            }, {
+              "fieldName" : "views_count",
+              "title" : "views_count",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "integer",
+              "displayAs" : "number",
+              "displayName" : "views_count"
+            }, {
+              "fieldName" : "videos_count",
+              "title" : "videos_count",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "integer",
+              "displayAs" : "number",
+              "displayName" : "videos_count"
+            }, {
+              "fieldName" : "privacyStatus",
+              "title" : "privacyStatus",
+              "booleanValues" : [ "false", "true" ],
+              "type" : "string",
+              "displayAs" : "string",
+              "displayName" : "privacyStatus"
+            } ]
+          },
+          "invisibleColumns" : [ ],
+          "allowHTMLByDefault" : false,
+          "itemsPerPage" : 25,
+          "paginationSize" : "default",
+          "condensed" : true,
+          "withRowNumber" : false,
+          "frame" : {
+            "title" : "Channel Details",
+            "showTitle" : true
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 2,
+        "width" : 6,
+        "height" : 4
+      }
+    }, {
+      "widget" : {
+        "name" : "67b96573",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8c6dde2c",
+            "fields" : [ {
+              "name" : "title",
+              "expression" : "`title`"
+            }, {
+              "name" : "sum(videos_per_week)",
+              "expression" : "SUM(`videos_per_week`)"
+            }, {
+              "name" : "sum(videos_per_day)",
+              "expression" : "SUM(`videos_per_day`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 1,
+          "widgetType" : "combo",
+          "encodings" : {
+            "y" : {
+              "primary" : {
+                "fields" : [ {
+                  "fieldName" : "sum(videos_per_week)",
+                  "displayName" : "Sum of videos_per_week"
+                }, {
+                  "fieldName" : "sum(videos_per_day)",
+                  "displayName" : "Sum of videos_per_day"
+                } ]
+              },
+              "secondary" : {
+                "fields" : [ ]
+              },
+              "scale" : {
+                "type" : "quantitative"
+              }
+            },
+            "x" : {
+              "fieldName" : "title",
+              "scale" : {
+                "type" : "categorical"
+              },
+              "displayName" : "title"
+            },
+            "label" : {
+              "show" : true
+            },
+            "color" : {
+              "legend" : {
+                "hide" : false,
+                "title" : "",
+                "position" : "bottom"
+              }
+            }
+          },
+          "mark" : {
+            "layout" : "group"
+          },
+          "frame" : {
+            "showTitle" : true,
+            "title" : "Video per day and per week"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 12,
+        "width" : 3,
+        "height" : 6
+      }
+    } ],
+    "pageType" : "PAGE_TYPE_CANVAS"
+  }, {
+    "name" : "454209c9",
+    "displayName" : "Global Filters",
+    "layout" : [ {
+      "widget" : {
+        "name" : "bab54b00",
+        "spec" : {
+          "version" : 2,
+          "widgetType" : "filter-single-select",
+          "encodings" : { },
+          "frame" : {
+            "showTitle" : true
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 2,
+        "width" : 1,
+        "height" : 2
+      }
+    } ],
+    "pageType" : "PAGE_TYPE_GLOBAL_FILTERS"
+  } ],
+  "uiSettings" : {
+    "theme" : { }
+  }
+}
